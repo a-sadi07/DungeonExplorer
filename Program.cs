@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DungeonExplorer
 {
@@ -6,14 +6,22 @@ namespace DungeonExplorer
     {
         static void Main(string[] args)
         {
-            // Create a new game with a player named "Adventurer"
-            Game game = new Game("Adventurer");
+            Console.Write("Enter your name, Adventurer: ");
+            string playerName = Console.ReadLine().Trim();
+
+            // Ensure the player enters a valid name
+            while (string.IsNullOrEmpty(playerName))
+            {
+                Console.Write("Name cannot be empty. Please enter your name: ");
+                playerName = Console.ReadLine().Trim();
+            }
 
             // Start the game
+            Game game = new Game(playerName);
             game.Start();
 
-            // Wait for the user to press a key before exiting
-            Console.WriteLine("Press any key to exit...");
+            // Wait before exiting
+            Console.WriteLine("\nPress any key to exit...");
             Console.ReadKey();
         }
     }
