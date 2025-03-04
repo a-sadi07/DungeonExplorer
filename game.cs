@@ -9,43 +9,43 @@ namespace DungeonExplorer
         private Dictionary<string, Room> rooms;
         private Room currentRoom;
 
-        // Constructor to initialize player and rooms
+        // Constructor initializes player and rooms
         public Game(string playerName)
         {
             player = new Player(playerName, 100);
 
             // Creating rooms and adding items
-            rooms = new Dictionary<string, Room>();
-            var room1 = new Room("A dark and spooky room.");
-            var room2 = new Room("A room filled with treasures.");
-            room1.AddItem("Sword");
-            room2.AddItem("Golden Coin");
+            rooms = new Dictionary<string, Room>
+            {
+                { "room1", new Room("A dark and spooky room.") },
+                { "room2", new Room("A room filled with treasures.") }
+            };
 
-            // Adding rooms to the game world
-            rooms.Add("room1", room1);
-            rooms.Add("room2", room2);
+            // Assign items to rooms
+            rooms["room1"].AddItem("Sword");
+            rooms["room2"].AddItem("Golden Coin");
 
-            // Start in the first room
-            currentRoom = room1;
+            // Set the starting room
+            currentRoom = rooms["room1"];
         }
 
-        // Start the game with a welcome message
+        // Start the game
         public void Start()
         {
-            Console.WriteLine($"Welcome to Dungeon Explorer, {player.Name}!");
+            Console.WriteLine($"\nWelcome to Dungeon Explorer, {player.Name}!");
+            DisplayCurrentRoomInfo();
             StartGameLoop();
         }
 
-        // Main game loop for player actions
-        public void StartGameLoop()
+        // Main game loop
+        private void StartGameLoop()
         {
             bool isPlaying = true;
 
             while (isPlaying)
             {
-                // Show room info and ask for player action
                 Console.WriteLine("\nWhat would you like to do? (pick up, move, status, quit)");
-                string command = Console.ReadLine().ToLower();
+                string command = Console.ReadLine().Trim().ToLower();
 
                 switch (command)
                 {
@@ -59,7 +59,7 @@ namespace DungeonExplorer
                         player.DisplayStatus();
                         break;
                     case "quit":
-                        Console.WriteLine("Thanks for playing!");
+                        Console.WriteLine("Thanks for playing! Goodbye!");
                         isPlaying = false;
                         break;
                     default:
@@ -69,21 +69,21 @@ namespace DungeonExplorer
             }
         }
 
-        // Show the description of the current room and any items in it
+        // Display the current room's description and items
         private void DisplayCurrentRoomInfo()
         {
-            Console.WriteLine(currentRoom.GetDescription());
+            Console.WriteLine($"\n{currentRoom.GetDescription()}");
             currentRoom.DisplayItem();
         }
 
-        // Handle picking up items in the room
+        // Allow player to pick up an item in the current room
         private void PickUpItemInRoom()
         {
             if (!string.IsNullOrEmpty(currentRoom.Item))
             {
-                player.PickUpItem(currentRoom.Item);
+                string item = currentRoom.Item;
+                player.PickUpItem(item);
                 currentRoom.RemoveItem();
-                Console.WriteLine($"You picked up the {currentRoom.Item}.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace DungeonExplorer
         private void MoveToAnotherRoom()
         {
             Console.WriteLine("Where would you like to go? (room1, room2)");
-            string roomChoice = Console.ReadLine().ToLower();
+            string roomChoice = Console.ReadLine().Trim().ToLower();
 
             if (rooms.ContainsKey(roomChoice))
             {
