@@ -32,7 +32,7 @@ namespace DungeonExplorer
         // Start the game
         public void Start()
         {
-            Console.WriteLine($"\nWelcome to Dungeon Explorer, {player.Name}!");
+            Console.WriteLine($"\nWelcome to Dungeon, {player.Name}!");
             DisplayCurrentRoomInfo();
             StartGameLoop();
         }
