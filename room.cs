@@ -1,3 +1,5 @@
+using System;
+
 namespace DungeonExplorer
 {
     public class Room
@@ -5,14 +7,14 @@ namespace DungeonExplorer
         public string Description { get; private set; }
         public string Item { get; private set; }
 
-        // Constructor initializes room description
+        // Constructor initializes the room description
         public Room(string description)
         {
             Description = description;
-            Item = null; // Initially no item in the room
+            Item = null; // No item initially
         }
 
-        // Method to get the description of the room
+        // Get the room's description
         public string GetDescription()
         {
             return Description;
@@ -24,17 +26,10 @@ namespace DungeonExplorer
             Item = item;
         }
 
-        // Display the item in the room, if there is one
+        // Display the item in the room
         public void DisplayItem()
         {
-            if (!string.IsNullOrEmpty(Item))
-            {
-                Console.WriteLine($"You see a {Item} in the room.");
-            }
-            else
-            {
-                Console.WriteLine("There's nothing of interest in this room.");
-            }
+            Console.WriteLine(!string.IsNullOrEmpty(Item) ? $"You see a {Item} in the room." : "There's nothing of interest here.");
         }
 
         // Remove the item from the room
