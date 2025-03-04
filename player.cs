@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace DungeonExplorer
@@ -8,7 +9,7 @@ namespace DungeonExplorer
         public int Health { get; private set; }
         private List<string> inventory;
 
-        // Constructor to initialize the player's name, health, and inventory
+        // Constructor to initialize the player
         public Player(string name, int health)
         {
             Name = name;
@@ -16,20 +17,21 @@ namespace DungeonExplorer
             inventory = new List<string>();
         }
 
-        // Method to pick up items and add them to the player's inventory
+        // Pick up an item and add it to inventory
         public void PickUpItem(string item)
         {
             inventory.Add(item);
+            Console.WriteLine($"{Name} picked up a {item}.");
         }
 
-        // Method to display the player's current status (name, health, and inventory)
+        // Display player's status
         public void DisplayStatus()
         {
-            Console.WriteLine($"Player: {Name}, Health: {Health}, Inventory: {InventoryContents()}");
+            Console.WriteLine($"\nPlayer: {Name}\nHealth: {Health}\nInventory: {InventoryContents()}");
         }
 
-        // Returns the player's inventory contents as a comma-separated string
-        public string InventoryContents()
+        // Return inventory contents as a formatted string
+        private string InventoryContents()
         {
             return inventory.Count > 0 ? string.Join(", ", inventory) : "Nothing";
         }
