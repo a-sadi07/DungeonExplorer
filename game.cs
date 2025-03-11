@@ -18,7 +18,7 @@ namespace DungeonExplorer
             rooms = new Dictionary<string, Room>
             {
                 { "room1", new Room("A dark and spooky room.") },
-                { "room2", new Room("A room filled with treasures. Do you want to pick up?") }
+                { "room2", new Room("A room full of gold. Do you want to take some?") }
             };
 
             // Assign items to rooms
@@ -44,7 +44,7 @@ namespace DungeonExplorer
 
             while (isPlaying)
             {
-                Console.WriteLine("\nWhat would you like to do? (pick up, move, status, quit)");
+                Console.WriteLine("\nWhat action will you take? (collect, move, check status, quit)");
                 string command = Console.ReadLine().Trim().ToLower();
 
                 switch (command)
@@ -94,7 +94,7 @@ namespace DungeonExplorer
         // Allow the player to move between rooms
         private void MoveToAnotherRoom()
         {
-            Console.WriteLine("Where would you like to go? (room1, room2)");
+            Console.WriteLine("Which place would you like to explore? [Room 1 or Room 2]");
             string roomChoice = Console.ReadLine().Trim().ToLower();
 
             if (rooms.ContainsKey(roomChoice))
