@@ -18,7 +18,7 @@ namespace DungeonExplorer
             rooms = new Dictionary<string, Room>
             {
                 { "room1", new Room("A dark and spooky room.") },
-                { "room2", new Room("A room filled with treasures.") }
+                { "room2", new Room("A room filled with treasures. Do you want to pick up?") }
             };
 
             // Assign items to rooms
@@ -32,7 +32,7 @@ namespace DungeonExplorer
         // Start the game
         public void Start()
         {
-            Console.WriteLine($"\nWelcome to Dungeon, {player.Name}!");
+            Console.WriteLine($"\nWelcome to Dungeon Explorer, {player.Name}!");
             DisplayCurrentRoomInfo();
             StartGameLoop();
         }
