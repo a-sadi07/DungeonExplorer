@@ -6,7 +6,7 @@ namespace DungeonExplorer
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter your name, Adventurer: ");
+            Console.Write("Please enter your name: ");
             string playerName = Console.ReadLine().Trim();
 
             // Ensure the player enters a valid name
