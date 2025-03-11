@@ -9,27 +9,21 @@ namespace DungeonExplorer
         private Dictionary<string, Room> rooms;
         private Room currentRoom;
 
-        // Constructor initializes player and rooms
         public Game(string playerName)
         {
             player = new Player(playerName, 100);
-
-            // Creating rooms and adding items
             rooms = new Dictionary<string, Room>
             {
                 { "room1", new Room("A dark and spooky room.") },
                 { "room2", new Room("A room full of gold. Do you want to take some?") }
             };
 
-            // Assign items to rooms
             rooms["room1"].AddItem("Sword");
             rooms["room2"].AddItem("Golden Coin");
 
-            // Set the starting room
             currentRoom = rooms["room1"];
         }
 
-        // Start the game
         public void Start()
         {
             Console.WriteLine($"\nWelcome to Dungeon Explorer, {player.Name}!");
@@ -37,7 +31,6 @@ namespace DungeonExplorer
             StartGameLoop();
         }
 
-        // Main game loop
         private void StartGameLoop()
         {
             bool isPlaying = true;
@@ -45,17 +38,25 @@ namespace DungeonExplorer
             while (isPlaying)
             {
                 Console.WriteLine("\nWhat action will you take? (collect, move, check status, quit)");
-                string command = Console.ReadLine().Trim().ToLower();
+                
+                // Added null check and validation for input
+                string command = Console.ReadLine()?.Trim().ToLower();
+
+                if (string.IsNullOrEmpty(command))
+                {
+                    Console.WriteLine("Invalid command. Try again.");
+                    continue;
+                }
 
                 switch (command)
                 {
-                    case "pick up":
+                    case "collect":
                         PickUpItemInRoom();
                         break;
                     case "move":
                         MoveToAnotherRoom();
                         break;
-                    case "status":
+                    case "check status":
                         player.DisplayStatus();
                         break;
                     case "quit":
@@ -69,14 +70,12 @@ namespace DungeonExplorer
             }
         }
 
-        // Display the current room's description and items
         private void DisplayCurrentRoomInfo()
         {
             Console.WriteLine($"\n{currentRoom.GetDescription()}");
             currentRoom.DisplayItem();
         }
 
-        // Allow player to pick up an item in the current room
         private void PickUpItemInRoom()
         {
             if (!string.IsNullOrEmpty(currentRoom.Item))
@@ -84,27 +83,38 @@ namespace DungeonExplorer
                 string item = currentRoom.Item;
                 player.PickUpItem(item);
                 currentRoom.RemoveItem();
+
+                // Check if the item collected is the sword
+                if (item.Equals("Sword", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Well done! You collected the Sword.");
+                }
+                else
+                {
+                    Console.WriteLine($"You collected the {item}.");
+                }
             }
             else
             {
-                Console.WriteLine("There's nothing to pick up in this room.");
+                Console.WriteLine("There's nothing to collect in this room.");
             }
         }
 
-        // Allow the player to move between rooms
         private void MoveToAnotherRoom()
         {
-            Console.WriteLine("Which place would you like to explore? [Room 1 or Room 2]");
-            string roomChoice = Console.ReadLine().Trim().ToLower();
+            Console.WriteLine("Which place would you like to explore? [Room1 or Room2]");
+            
+            // Added null check and validation for room input
+            string roomChoice = Console.ReadLine()?.Trim().ToLower();
 
-            if (rooms.ContainsKey(roomChoice))
+            if (string.IsNullOrEmpty(roomChoice) || !rooms.ContainsKey(roomChoice))
             {
-                currentRoom = rooms[roomChoice];
-                DisplayCurrentRoomInfo();
+                Console.WriteLine("Invalid room choice. Try again.");
             }
             else
             {
-                Console.WriteLine("Invalid room choice. Try again.");
+                currentRoom = rooms[roomChoice];
+                DisplayCurrentRoomInfo();
             }
         }
     }
