@@ -6,22 +6,21 @@ namespace DungeonExplorer
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter your name, Adventurer: ");
+            // Prompt user for their name
+            Console.WriteLine("Please enter your name:");
             string playerName = Console.ReadLine().Trim();
 
-            // Ensure the player enters a valid name
-            while (string.IsNullOrEmpty(playerName))
+            // If no name is entered, set a default name
+            if (string.IsNullOrEmpty(playerName))
             {
-                Console.Write("Name cannot be empty. Please enter your name: ");
-                playerName = Console.ReadLine().Trim();
+                playerName = "Sparring Warrior";
             }
 
-            // Start the game
+            // Create a new game with the player's name
             Game game = new Game(playerName);
             game.Start();
 
-            // Wait before exiting
-            Console.WriteLine("\nPress any key to exit...");
+            Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
     }
